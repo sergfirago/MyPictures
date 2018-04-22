@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Мои картинки</string>
+    <string name="main_loading">Загрузка…</string>
+    <string name="error_loading">Ошибка при загрузке списка изображений. Нет подключения к Интернету?</string>
+    <string name="menu_favourites">Избранное</string>
+    <string name="menu_yandex_disk">Яндекс диск</string>
+    <string name="loading_from_disk">Список фото загружен с локального хранилища. %1$d фото.</string>
+    <string name="loading_from_net">Список фото загружен из сети. %1$d фото.</string>
+    <string name="unknown_error_picasso">Неизвесная ошибка</string>
+    <string name="loading_error_picasso">Ошибка загрузки %1$s</string>
+    <string name="big_picture">Большая картинка</string>
+    <string name="preview">Маленькая картинка</string>
+</resources>

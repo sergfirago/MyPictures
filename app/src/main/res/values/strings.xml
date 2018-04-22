@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">My Pictures</string>
+    <string name="main_loading">Loading…</string>
+    <string name="error_loading">Error loading picture list. No connection to the Internet?</string>
+    <string name="loading_from_disk">Images list loaded from disk. %1$d photo.</string>
+    <string name="loading_from_net">Images list loaded from net. %1$d photo.</string>
+    <string name="menu_yandex_disk">Yandex Disk</string>
+    <string name="menu_flickr" translatable="false">Flickr</string>
+    <string name="menu_favourites">Favorites</string>
+    <string name="unknown_error_picasso">Unknown error</string>
+    <string name="loading_error_picasso">Loading error %1$s</string>
+    <string name="big_picture">Big picture</string>
+    <string name="preview">Preview</string>
+</resources>

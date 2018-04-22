@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_yandex"
+        android:icon="@drawable/ic_cloud_circle"
+        android:title="@string/menu_yandex_disk"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_flickr"
+        android:icon="@drawable/ic_blur_circular"
+        android:title="@string/menu_flickr"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_favorites"
+        android:icon="@drawable/ic_favorite_border"
+        android:title="@string/menu_favourites"
+        app:showAsAction="never" />
+</menu>

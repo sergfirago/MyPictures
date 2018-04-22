@@ -1,0 +1,72 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.firago.serg.mypictures"
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+
+    implementation "com.android.support:appcompat-v7:$supportLibrary"
+    implementation "com.android.support:recyclerview-v7:$supportLibrary"
+    annotationProcessor "com.android.support:support-annotations:$supportLibrary"
+    implementation "com.android.support:design:$supportLibrary"
+    //for picasso
+    implementation group: 'com.android.support', name: 'exifinterface', version: "$supportLibrary"
+
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+
+    implementation "android.arch.lifecycle:livedata:1.1.1"
+    implementation "android.arch.lifecycle:viewmodel:1.1.1"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+
+    //coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.22.5"
+
+
+    // net, gson, picasso
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.10.0'
+    testImplementation "com.nhaarman:mockito-kotlin:1.5.0"
+
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    testImplementation "android.arch.core:core-testing:1.1.1"
+
+
+}
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
