@@ -31,7 +31,11 @@ class RepositoryImpl(private val client: PictureCloudClient,
     private val LOG_TAG = "RepositoryTest"
     private var list: MutableList<PictureLink>? = null
     private lateinit var type: TypeLoading
+    private var page = 1
+
+    @Synchronized
     override fun loadFirstLinks(): ResourceLinks {
+        page = 1
         try {
             val response = client.getPicturesResponse()
             return if (response.isSuccessful()) {
@@ -55,12 +59,15 @@ class RepositoryImpl(private val client: PictureCloudClient,
     }
 
 
+    @Synchronized
     override fun loadMoreLinks(): ResourceLinks {
+        if (page<10)
         try {
-            val response = client.getMorePictures()
+            val response = client.getMorePictures(page)
             if (response.isSuccessful()) {
                 list!!.addAll(mapper.getPictureList(response.body))
                 storage.savePictureLinks(list!!)
+                page++
             }
         } catch (e: IOException) {
         }

@@ -11,5 +11,5 @@ interface PictureCloudClient {
     fun getPicturesResponse(): PicturesResponse
 
     @Throws(IOException::class)
-    fun getMorePictures(): PicturesResponse
+    fun getMorePictures(page: Int): PicturesResponse
 }
