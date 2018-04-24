@@ -146,7 +146,7 @@ class RepositoryImplTest {
         val BODY_MORE_RESPONSE = "body2"
         val client = mock<PictureCloudClient> {
             on { getPicturesResponse() } doReturn PicturesResponse(200, BODY_FIRST_RESPONSE)
-            on { getMorePictures() } doReturn PicturesResponse(200, BODY_MORE_RESPONSE)
+            on { getMorePictures(any()) } doReturn PicturesResponse(200, BODY_MORE_RESPONSE)
         }
         val mapper = mock<PictureListMapper> {
             on { getPictureList(BODY_FIRST_RESPONSE) } doReturn list
@@ -170,7 +170,7 @@ class RepositoryImplTest {
         val BODY_MORE_RESPONSE = "body2"
         val client = mock<PictureCloudClient> {
             on { getPicturesResponse() } doReturn PicturesResponse(200, BODY_FIRST_RESPONSE)
-            on { getMorePictures() } doReturn PicturesResponse(404, BODY_MORE_RESPONSE)
+            on { getMorePictures(any()) } doReturn PicturesResponse(404, BODY_MORE_RESPONSE)
         }
         val mapper = mock<PictureListMapper> {
             on { getPictureList(BODY_FIRST_RESPONSE) } doReturn list
@@ -195,7 +195,7 @@ class RepositoryImplTest {
         val BODY_MORE_RESPONSE = "body2"
         val client = mock<PictureCloudClient> {
             on { getPicturesResponse() } doReturn PicturesResponse(200, BODY_FIRST_RESPONSE)
-            on { getMorePictures() } doThrow IOException("error connect")
+            on { getMorePictures(any()) } doThrow IOException("error connect")
         }
         val mapper = mock<PictureListMapper> {
             on { getPictureList(BODY_FIRST_RESPONSE) } doReturn list
@@ -212,6 +212,34 @@ class RepositoryImplTest {
         assertEquals(TypeLoading.FROM_NET, resource.links.type)
         assertEquals(list, resource.links.pictures)
         verify(mapper, never()).getPictureList(BODY_MORE_RESPONSE)
+    }
+
+
+    @Test
+    fun `loadMoreLinks should return links after disconnect`() {
+        val BODY_FIRST_RESPONSE = "body"
+        val BODY_MORE_RESPONSE = "body2"
+        val client = mock<PictureCloudClient> {
+            on { getPicturesResponse() } doReturn PicturesResponse(200, BODY_FIRST_RESPONSE)
+            on { getMorePictures(1) }
+                    .doThrow(IOException("error connect"))
+                    .doReturn( PicturesResponse(200, BODY_MORE_RESPONSE))
+        }
+        val mapper = mock<PictureListMapper> {
+            on { getPictureList(BODY_FIRST_RESPONSE) } doReturn list
+            on { getPictureList(BODY_MORE_RESPONSE) } doReturn listNext
+        }
+        val storage = mock<LocalStorage>()
+
+
+        val repository = RepositoryImpl(client, storage, mapper)
+        repository.loadFirstLinks()
+        repository.loadMoreLinks() //IOException
+        val resource = repository.loadMoreLinks()
+
+        verify(mapper).getPictureList(BODY_MORE_RESPONSE)
+        assertEquals(TypeLoading.FROM_NET, resource.links.type)
+        assertEquals(list+listNext, resource.links.pictures)
     }
 
 }

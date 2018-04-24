@@ -61,15 +61,16 @@ class RepositoryImpl(private val client: PictureCloudClient,
 
     @Synchronized
     override fun loadMoreLinks(): ResourceLinks {
-        if (page<10)
-        try {
-            val response = client.getMorePictures(page)
-            if (response.isSuccessful()) {
-                list!!.addAll(mapper.getPictureList(response.body))
-                storage.savePictureLinks(list!!)
-                page++
+        if (page < 10) {
+            try {
+                val response = client.getMorePictures(page)
+                if (response.isSuccessful()) {
+                    list!!.addAll(mapper.getPictureList(response.body))
+                    storage.savePictureLinks(list!!)
+                    page++
+                }
+            } catch (e: IOException) {
             }
-        } catch (e: IOException) {
         }
         return ResourceLinks(TypeLoadingWrapper(type, list!!), NoError)
     }
